@@ -1,10 +1,11 @@
-package pl.balif.shadows.core.domain.command;
+package pl.balif.shadows.core.domain.action.command;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import lombok.Data;
 import pl.balif.shadows.core.domain.Hero;
+import pl.balif.shadows.core.domain.action.command.core.HeroUpdate;
 import pl.balif.shadows.core.domain.embeddable.Skills;
 
 /**
@@ -12,8 +13,8 @@ import pl.balif.shadows.core.domain.embeddable.Skills;
  */
 @Entity
 @Data
-@DiscriminatorValue("SkillsAdd")
-public class HeroAddSkills extends HeroUpdate {
+@DiscriminatorValue("LevelUp")
+public class HeroAddLevel extends HeroUpdate {
 
     @Embedded
     Skills skills;

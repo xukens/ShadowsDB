@@ -1,14 +1,12 @@
-package pl.balif.shadows.core.domain.command;
+package pl.balif.shadows.core.domain.action.command.core;
 
-import java.util.LinkedList;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 import lombok.Data;
 import pl.balif.shadows.core.domain.BaseEntity;
 import pl.balif.shadows.core.domain.Hero;
+import pl.balif.shadows.core.domain.action.template.HeroUpdateTemplate;
 
 import static pl.wavesoftware.eid.utils.EidPreconditions.checkState;
 
@@ -36,8 +34,9 @@ public class HeroLog extends BaseEntity {
 
     }
 
-    public void executeNew(HeroUpdate heroUpdate) {
-        checkState(heroUpdate.getId() == null, "20160602:000141");
+    public void execute(HeroUpdateTemplate heroUpdateTemplate) {
+//        checkState(heroUpdate.getId() == null, "20160602:000141");
+        HeroUpdate heroUpdate = new H
         macro.getCommands().add(heroUpdate);
         heroUpdate.setEntirety(macro);
         // heroUpdate.execute();
