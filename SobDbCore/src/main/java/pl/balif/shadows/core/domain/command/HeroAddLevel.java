@@ -12,8 +12,8 @@ import pl.balif.shadows.core.domain.embeddable.Skills;
  */
 @Entity
 @Data
-@DiscriminatorValue("SkillsAdd")
-public class HeroAddSkills extends HeroUpdate {
+@DiscriminatorValue("LevelUp")
+public class HeroAddLevel extends HeroUpdate {
 
     @Embedded
     Skills skills;

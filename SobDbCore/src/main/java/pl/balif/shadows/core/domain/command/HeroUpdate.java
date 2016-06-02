@@ -20,9 +20,14 @@ import pl.balif.shadows.core.domain.Hero;
 public abstract class HeroUpdate extends BaseEntity{
 
     @ManyToOne
-    private HeroUpdateMacro owner;
+    private Hero receiver;
+
+    @ManyToOne
+    private HeroUpdateMacro entirety;
 
     abstract void execute();
 
     abstract void inverseExecute();
+
+
 }

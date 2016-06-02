@@ -10,11 +10,16 @@ import pl.balif.shadows.core.converter.ConversionService;
 import pl.balif.shadows.core.domain.Hero;
 import pl.balif.shadows.core.domain.HeroClass;
 import pl.balif.shadows.core.domain.Item;
+import pl.balif.shadows.core.domain.command.HeroAddLevel;
+import pl.balif.shadows.core.domain.command.HeroAddSkills;
+import pl.balif.shadows.core.domain.command.HeroLog;
 import pl.balif.shadows.core.dto.form.HeroForm;
 import pl.balif.shadows.core.repositorie.HeroClassRepository;
 import pl.balif.shadows.core.repositorie.HeroRepository;
 
 import java.util.List;
+import pl.balif.shadows.core.repositorie.command.HeroLogRepository;
+import pl.balif.shadows.core.repositorie.command.HeroUpdateRepository;
 
 import static pl.wavesoftware.eid.utils.EidPreconditions.checkArgument;
 import static pl.wavesoftware.eid.utils.EidPreconditions.checkNotNull;
@@ -29,17 +34,22 @@ public class SobHeroService implements pl.balif.shadows.core.service.SobHeroServ
     private final HeroRepository heroRepository;
     private final HeroClassRepository heroClassRepository;
     private final ConversionService conversionService;
+    private final HeroLogRepository heroLogRepository;
+    private final HeroUpdateRepository heroUpdateRepository;
 
     @Autowired
-    public SobHeroService(HeroRepository heroRepository, HeroClassRepository heroClassRepository, ConversionService conversionService) {
+    public SobHeroService(HeroRepository heroRepository, HeroClassRepository heroClassRepository, ConversionService conversionService, HeroLogRepository heroLogRepository, HeroUpdateRepository heroUpdateRepository) {
         this.heroRepository = heroRepository;
         this.heroClassRepository = heroClassRepository;
         this.conversionService = conversionService;
+        this.heroLogRepository = heroLogRepository;
+        this.heroUpdateRepository = heroUpdateRepository;
     }
 
     @Override
     public List<HeroForm> getHeroes() {
         List<Hero> heroList = (List<Hero>) heroRepository.findAll();
+        heroLogRepository.findOne(1L).getMacro().getCommands().toString();
         return conversionService.convert(heroList, HeroForm.class);
     }
 
@@ -62,6 +72,17 @@ public class SobHeroService implements pl.balif.shadows.core.service.SobHeroServ
         hero.setKeywords(Lists.newArrayList(heroClass.getKeywords()));
         hero.setItems(mapToItemQuantityMap(heroClass.getItems()));
         hero = heroRepository.save(hero);
+        HeroLog heroLog = new HeroLog(hero);
+        heroLog.setHero(hero);
+        heroLog=heroLogRepository.save(heroLog);
+        HeroAddSkills hsl = new HeroAddSkills();
+        heroLog.executeNew(hsl);
+//        heroLog.executeNew(new HeroAddLevel());
+        heroLog.executeNew(new HeroAddSkills());
+        HeroAddLevel hal = new HeroAddLevel();
+        hal.setEntirety(heroLog.getMacro());
+        hal= heroUpdateRepository.save(hal);
+        heroLog.getMacro().getCommands().add(hal);
         return hero.getId();
     }
 

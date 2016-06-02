@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 public class IndexController {
 
-    @RequestMapping("/*")
-    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
-    public String redirectToIndex(){
-        return "redirect:/index";
-    }
+//    @RequestMapping("/*")
+//    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
+//    public String redirectToIndex(){
+//        return "redirect:/index";
+//    }
 
     @RequestMapping("/index")
     public String mainPage(){

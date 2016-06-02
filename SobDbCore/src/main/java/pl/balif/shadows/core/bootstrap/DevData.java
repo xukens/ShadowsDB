@@ -19,6 +19,7 @@ import pl.balif.shadows.core.repositorie.HeroClassRepository;
 import pl.balif.shadows.core.repositorie.HeroRepository;
 import pl.balif.shadows.core.repositorie.ItemRepository;
 import pl.balif.shadows.core.repositorie.KeywordRepository;
+import pl.balif.shadows.core.repositorie.command.HeroLogRepository;
 import pl.balif.shadows.core.service.SobHeroService;
 
 /**
@@ -33,15 +34,17 @@ public class DevData implements ApplicationListener<ContextRefreshedEvent> {
     private final HeroClassRepository heroClassRepository;
     private final ItemRepository itemRepository;
     private final SobHeroService sobHeroService;
+    private final HeroLogRepository heroLogRepository;
 
     @Autowired
-    public DevData(HeroRepository heroRepository, AbilityRepository abilityRepository, KeywordRepository keywordRepository, HeroClassRepository heroClassRepository, ItemRepository itemRepository, SobHeroService sobHeroService) {
+    public DevData(HeroRepository heroRepository, AbilityRepository abilityRepository, KeywordRepository keywordRepository, HeroClassRepository heroClassRepository, ItemRepository itemRepository, SobHeroService sobHeroService, HeroLogRepository heroLogRepository) {
         this.heroRepository = heroRepository;
         this.abilityRepository = abilityRepository;
         this.keywordRepository = keywordRepository;
         this.heroClassRepository = heroClassRepository;
         this.itemRepository = itemRepository;
         this.sobHeroService = sobHeroService;
+        this.heroLogRepository = heroLogRepository;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class DevData implements ApplicationListener<ContextRefreshedEvent> {
         Long h = sobHeroService.createNewHero(hc.getId(), "Flamaster Nun");
         Hero hero = heroRepository.getOne(h);
 
-
+        sobHeroService.getHeroes();
 //        Hero hero = createHero("Flamaster", 5, 10, 4, 4, 10, 4, 4, 2, 2, new Keyword[]{keyword, keywordPriest}, new Ability[]{ability}, 4, 4, 4, 4, 4, 4);
 //        Hero heroMagik = createHero("Magik", 5, 10, 4, 4, 10, 4, 4, 2, 2, new Keyword[]{keywordPriest}, new Ability[]{abilityAim, ability}, 5, 2, 5, 2, 4, 3);
     }
