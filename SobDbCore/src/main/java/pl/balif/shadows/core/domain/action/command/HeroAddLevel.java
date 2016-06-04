@@ -20,13 +20,13 @@ public class HeroAddLevel extends HeroUpdate {
     Skills skills;
 
     @Override
-    void execute() {
+    protected void execute() {
         Hero h = getReceiver();
         h.getSkills().add(skills);
     }
 
     @Override
-    void inverseExecute() {
+    protected void inverseExecute() {
         Hero h = getReceiver();
         h.getSkills().subtract(skills);
     }

@@ -13,6 +13,8 @@ import pl.balif.shadows.core.domain.Item;
 import pl.balif.shadows.core.domain.action.command.HeroAddLevel;
 import pl.balif.shadows.core.domain.action.command.HeroAddSkills;
 import pl.balif.shadows.core.domain.action.command.core.HeroLog;
+import pl.balif.shadows.core.domain.action.template.HeroAddSkillsTemplate;
+import pl.balif.shadows.core.domain.embeddable.Skills;
 import pl.balif.shadows.core.dto.form.HeroForm;
 import pl.balif.shadows.core.repositorie.HeroClassRepository;
 import pl.balif.shadows.core.repositorie.HeroRepository;
@@ -49,7 +51,7 @@ public class SobHeroService implements pl.balif.shadows.core.service.SobHeroServ
     @Override
     public List<HeroForm> getHeroes() {
         List<Hero> heroList = (List<Hero>) heroRepository.findAll();
-        heroLogRepository.findOne(1L).getMacro().getCommands().toString();
+//        heroLogRepository.findOne(1L).getMacro().getCommands().toString();
         return conversionService.convert(heroList, HeroForm.class);
     }
 
@@ -73,16 +75,17 @@ public class SobHeroService implements pl.balif.shadows.core.service.SobHeroServ
         hero.setItems(mapToItemQuantityMap(heroClass.getItems()));
         hero = heroRepository.save(hero);
         HeroLog heroLog = new HeroLog(hero);
-        heroLog.setHero(hero);
         heroLog=heroLogRepository.save(heroLog);
-        HeroAddSkills hsl = new HeroAddSkills();
-        heroLog.executeNew(hsl);
+        HeroAddSkillsTemplate temp = new HeroAddSkillsTemplate(new Skills(1,2,3,4,5,6,7));
+        heroLog.executeCommand(temp);
+//        HeroAddSkills hsl = new HeroAddSkills();
+//        heroLog.executeNew(hsl);
 //        heroLog.executeNew(new HeroAddLevel());
-        heroLog.executeNew(new HeroAddSkills());
-        HeroAddLevel hal = new HeroAddLevel();
-        hal.setEntirety(heroLog.getMacro());
-        hal= heroUpdateRepository.save(hal);
-        heroLog.getMacro().getCommands().add(hal);
+//        heroLog.executeNew(new HeroAddSkills());
+//        HeroAddLevel hal = new HeroAddLevel();
+//        hal.setEntirety(heroLog.getMacro());
+//        hal= heroUpdateRepository.save(hal);
+//        heroLog.getMacro().getCommands().add(hal);
         return hero.getId();
     }
 

@@ -5,11 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import pl.balif.shadows.core.domain.BaseEntity;
 import pl.balif.shadows.core.domain.Hero;
 import pl.balif.shadows.core.domain.action.template.HeroUpdateTemplate;
+
+import static pl.wavesoftware.eid.utils.EidPreconditions.checkNotNull;
 
 /**
  * Created by RudyKot on 2016-05-30.
@@ -18,26 +19,21 @@ import pl.balif.shadows.core.domain.action.template.HeroUpdateTemplate;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "ACTION")
-@AllArgsConstructor
 public abstract class HeroUpdate extends BaseEntity{
 
     @ManyToOne
     private Hero receiver;
 
-    @ManyToOne
-    private HeroUpdateMacro entirety;
-
-    @ManyToOne
-    private HeroUpdateTemplate template;
-
-    abstract void execute();
-
-    abstract void inverseExecute();
-
-    HeroUpdate(){
-
+    public HeroUpdate(Hero receiver) {
+        checkNotNull(receiver,"20160604:163629");
+        this.receiver = receiver;
     }
 
+    protected abstract void execute();
 
+    protected abstract void inverseExecute();
+
+    protected HeroUpdate(){
+    }
 
 }

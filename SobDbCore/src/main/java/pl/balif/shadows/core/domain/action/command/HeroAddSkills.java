@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import lombok.Data;
 import pl.balif.shadows.core.domain.Hero;
 import pl.balif.shadows.core.domain.action.command.core.HeroUpdate;
+import pl.balif.shadows.core.domain.action.command.core.HeroUpdateMacro;
+import pl.balif.shadows.core.domain.action.template.HeroUpdateTemplate;
 import pl.balif.shadows.core.domain.embeddable.Skills;
 
 /**
@@ -19,14 +21,23 @@ public class HeroAddSkills extends HeroUpdate {
     @Embedded
     Skills skills;
 
+    protected HeroAddSkills() {
+        //no instance
+    }
+
+    public HeroAddSkills(Hero receiver, Skills skills) {
+        super(receiver);
+        this.skills=skills;
+    }
+
     @Override
-    void execute() {
+    protected void execute(){
         Hero h = getReceiver();
         h.getSkills().add(skills);
     }
 
     @Override
-    void inverseExecute() {
+    protected void inverseExecute() {
         Hero h = getReceiver();
         h.getSkills().subtract(skills);
     }

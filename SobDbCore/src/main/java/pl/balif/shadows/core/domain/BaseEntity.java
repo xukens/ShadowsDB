@@ -9,6 +9,7 @@ import javax.persistence.*;
  */
 @MappedSuperclass
 @Data
+//@Access(AccessType.PROPERTY)
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

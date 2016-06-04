@@ -9,6 +9,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import lombok.Data;
 import pl.balif.shadows.core.domain.Hero;
+import pl.balif.shadows.core.domain.action.template.HeroUpdateMacroTemplate;
+
+import static pl.wavesoftware.eid.utils.EidPreconditions.checkNotNull;
 
 /**
  * Created by RudyKot on 2016-05-30.
@@ -17,8 +20,7 @@ import pl.balif.shadows.core.domain.Hero;
 @Data
 @DiscriminatorValue("HeroMacro")
 public class HeroUpdateMacro extends HeroUpdate {
-    //
-    @OneToMany(mappedBy = "entirety", cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @OrderColumn(name = "EXECUTION_ORDER")
     private List<HeroUpdate> commands;
 
@@ -30,23 +32,20 @@ public class HeroUpdateMacro extends HeroUpdate {
     }
 
     public HeroUpdateMacro(Hero reciver, List<HeroUpdate> commands) {
-        this();
+        super(reciver);
+        checkNotNull(commands, "20160604:174225");
         this.setReceiver(reciver);
+        commands = new LinkedList<>();
         this.commands.addAll(commands);
     }
 
-    public HeroUpdateMacro(Hero reciver) {
-        this();
-        this.setReceiver(reciver);
-    }
-
     @Override
-    void execute() {
+    protected void execute() {
         commands.forEach(HeroUpdate::execute);
     }
 
     @Override
-    void inverseExecute() {
+    protected void inverseExecute() {
 //        commands.descendingIterator().forEachRemaining(HeroUpdate::inverseExecute);
     }
 
