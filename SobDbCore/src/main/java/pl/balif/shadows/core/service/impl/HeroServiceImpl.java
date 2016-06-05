@@ -10,20 +10,16 @@ import pl.balif.shadows.core.converter.ConversionService;
 import pl.balif.shadows.core.domain.Hero;
 import pl.balif.shadows.core.domain.HeroClass;
 import pl.balif.shadows.core.domain.Item;
-import pl.balif.shadows.core.domain.action.command.HeroAddLevel;
-import pl.balif.shadows.core.domain.action.command.HeroAddSkills;
 import pl.balif.shadows.core.domain.action.command.core.HeroLog;
-import pl.balif.shadows.core.domain.action.template.HeroAddSkillsTemplate;
-import pl.balif.shadows.core.domain.embeddable.Skills;
 import pl.balif.shadows.core.dto.form.HeroForm;
 import pl.balif.shadows.core.repositorie.HeroClassRepository;
 import pl.balif.shadows.core.repositorie.HeroRepository;
 
 import java.util.List;
-import pl.balif.shadows.core.repositorie.command.HeroLogRepository;
-import pl.balif.shadows.core.repositorie.command.HeroUpdateRepository;
+import pl.balif.shadows.core.repositorie.action.HeroLogRepository;
+import pl.balif.shadows.core.repositorie.action.HeroUpdateRepository;
+import pl.balif.shadows.core.service.HeroService;
 
-import static pl.wavesoftware.eid.utils.EidPreconditions.checkArgument;
 import static pl.wavesoftware.eid.utils.EidPreconditions.checkNotNull;
 
 /**
@@ -31,7 +27,7 @@ import static pl.wavesoftware.eid.utils.EidPreconditions.checkNotNull;
  */
 @Service
 @Transactional
-public class SobHeroService implements pl.balif.shadows.core.service.SobHeroService {
+public class HeroServiceImpl implements HeroService {
 
     private final HeroRepository heroRepository;
     private final HeroClassRepository heroClassRepository;
@@ -40,7 +36,7 @@ public class SobHeroService implements pl.balif.shadows.core.service.SobHeroServ
     private final HeroUpdateRepository heroUpdateRepository;
 
     @Autowired
-    public SobHeroService(HeroRepository heroRepository, HeroClassRepository heroClassRepository, ConversionService conversionService, HeroLogRepository heroLogRepository, HeroUpdateRepository heroUpdateRepository) {
+    public HeroServiceImpl(HeroRepository heroRepository, HeroClassRepository heroClassRepository, ConversionService conversionService, HeroLogRepository heroLogRepository, HeroUpdateRepository heroUpdateRepository) {
         this.heroRepository = heroRepository;
         this.heroClassRepository = heroClassRepository;
         this.conversionService = conversionService;
@@ -73,19 +69,8 @@ public class SobHeroService implements pl.balif.shadows.core.service.SobHeroServ
         hero.setAbilities(Lists.newArrayList(heroClass.getAbilities()));
         hero.setKeywords(Lists.newArrayList(heroClass.getKeywords()));
         hero.setItems(mapToItemQuantityMap(heroClass.getItems()));
+        hero.setHeroLog(new HeroLog(hero));
         hero = heroRepository.save(hero);
-        HeroLog heroLog = new HeroLog(hero);
-        heroLog=heroLogRepository.save(heroLog);
-        HeroAddSkillsTemplate temp = new HeroAddSkillsTemplate(new Skills(1,2,3,4,5,6,7));
-        heroLog.executeCommand(temp);
-//        HeroAddSkills hsl = new HeroAddSkills();
-//        heroLog.executeNew(hsl);
-//        heroLog.executeNew(new HeroAddLevel());
-//        heroLog.executeNew(new HeroAddSkills());
-//        HeroAddLevel hal = new HeroAddLevel();
-//        hal.setEntirety(heroLog.getMacro());
-//        hal= heroUpdateRepository.save(hal);
-//        heroLog.getMacro().getCommands().add(hal);
         return hero.getId();
     }
 

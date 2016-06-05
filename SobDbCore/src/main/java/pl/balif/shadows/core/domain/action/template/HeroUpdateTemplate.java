@@ -8,7 +8,7 @@ import pl.balif.shadows.core.domain.action.command.core.HeroUpdate;
 import pl.balif.shadows.core.domain.action.command.core.HeroUpdateMacro;
 
 /**
- * @author Paweł Nowakowski <pawel.nowakowski@coi.gov.pl>
+ * @author Paweł Nowakowski <balif.n@gmail.com>
  */
 @Entity
 @Data
@@ -16,4 +16,12 @@ public abstract class HeroUpdateTemplate<T extends HeroUpdate> extends BaseEntit
     String name;
 
     public abstract T createCommand(Hero receiver);
+
+    protected HeroUpdateTemplate() {
+
+    }
+
+    public HeroUpdateTemplate(String name) {
+        this.name = name;
+    }
 }

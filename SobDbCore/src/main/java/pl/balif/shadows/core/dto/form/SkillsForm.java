@@ -8,11 +8,12 @@ import lombok.Data;
 @Data
 public class SkillsForm {
 
-    Integer Agility;
-    Integer Cunning;
-    Integer Spirit;
-    Integer Strength;
-    Integer Lore;
-    Integer Luck;
+    private Integer agility;
+    private Integer cunning;
+    private Integer spirit;
+    private Integer strength;
+    private Integer lore;
+    private Integer luck;
+    private Integer initiative;
 
 }

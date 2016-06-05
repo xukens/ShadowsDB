@@ -1,4 +1,4 @@
-package pl.balif.shadows.core.repositorie.command;
+package pl.balif.shadows.core.repositorie.action;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

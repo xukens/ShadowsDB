@@ -2,6 +2,7 @@ package pl.balif.shadows.core.domain;
 
 import java.util.Map;
 import java.util.Set;
+import pl.balif.shadows.core.domain.action.command.core.HeroLog;
 import pl.balif.shadows.core.domain.embeddable.HeroStats;
 import pl.balif.shadows.core.domain.embeddable.Skills;
 import lombok.Data;
@@ -15,7 +16,8 @@ import java.util.List;
  */
 @Entity
 @Data
-public class Hero extends BaseEntity {
+public class
+Hero extends BaseEntity {
 
     private String name;
     @Embedded
@@ -29,6 +31,9 @@ public class Hero extends BaseEntity {
     private List<Keyword> keywords;
     @ManyToMany
     private List<Ability> abilities;
+
+    @OneToOne(mappedBy = "hero", cascade = CascadeType.ALL)
+    private HeroLog heroLog;
 
     @ElementCollection
     @CollectionTable(name ="ITEM_QUANTITY")

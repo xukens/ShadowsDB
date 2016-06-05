@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="col-xs-12" th:fragment="skills">
+    <div class="col-xs-4">
+    <label class="control-label">Agility:</label>
+        <p th:text=" *{agility}"> </p>
+    </div>
+    <div class="col-xs-4">
+        <label class="control-label">Cunning:</label>
+        <p th:text=" *{cunning}" >2</p>
+    </div>
+    <div class="col-xs-4">
+        <label class="control-label">Spirit:</label>
+        <p th:text=" *{spirit}">2</p>
+    </div>
+    <div class="col-xs-3">
+        <label class="control-label">Strength:</label>
+        <p th:text=" *{strength}">2</p>
+    </div>
+    <div class="col-xs-3">
+        <label class="control-label">Lore:</label>
+        <p th:text=" *{lore}" >2</p>
+    </div>
+    <div class="col-xs-3">
+        <label class="control-label">Luck:</label>
+        <p th:text=" *{luck}" >2</p>
+    </div>
+    <div class="col-xs-3">
+        <label class="control-label">Initiative:</label>
+        <p th:text=" *{initiative}" >2</p>
+    </div>
+</div>
+</body>
+</html>

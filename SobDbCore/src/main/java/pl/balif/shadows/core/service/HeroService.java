@@ -7,7 +7,7 @@ import pl.balif.shadows.core.dto.form.HeroForm;
 /**
  * Created by RudyKot on 2016-05-26.
  */
-public interface SobHeroService {
+public interface HeroService {
 
     List<HeroForm> getHeroes();
 

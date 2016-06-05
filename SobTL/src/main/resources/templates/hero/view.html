@@ -7,86 +7,85 @@
 <div class="container">
     <div th:replace="fragments/header :: header">
     </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Hero Id:</label>
+        <div class="col-sm-10">
+            <p class="form-control-static" th:text=" *{id}"></p>
+        </div>
+    </div>
+    <div>
+        <h2>Actions</h2>
+        <ul class="list-inline">
+            <li>Level up</li>
+            <li>Add item</li>
+            <li>Add token</li>
+            <li>Add ability</li>
+        </ul>
+    </div>
     <div th:object="${hero}">
-        <h2 th:text="'Hero ' + *{name}"></h2>
-        <div class="row">
-            <div class="col-sm-8">
-                <form class="form-horizontal" >
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Hero Id:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{id}"></p>
-                        </div>
+        <div class="col-xs-4">
+            <h3 th:text=" *{name}"></h3>
+            <img th:src="@{/images/hero.jpg} " class="img-responsive"/>
+            <div class="form-group">
+                <!--<label class="col-sm-2 control-label">Key words:</label>-->
+                <ul class="col-sm-10 list-inline">
+                    <li class="col-xs-4" th:each="keyword :  *{keywords}" th:text="${keyword}"></li>
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="control-label">Combat:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text=" *{combat}"></p>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Initiative:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text="*{initiative}"></p>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Max grit:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text=" *{maxGrit}"></p>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Max Hp:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{maxHealth}"></p>
-                        </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="control-label">To Hit Range:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text=" *{toHitRange}"></p>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Max Sanity:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{maxSanity}"></p>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">To Hit Melee:</label>
+                    <div class="col-sm-12">
+                        <p class="form-control-static" th:text=" *{toHitMelee}"></p>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Defense:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{defense}"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Willpower:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{willpower}"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">To Hit Range:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{toHitRange}"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">To Hit Melee:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{toHitMelee}"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Combat:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{combat}"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Max grit:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static" th:text=" *{maxGrit}"></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Key words:</label>
-                            <ul class="col-sm-10 list-inline" >
-                                <li class="form-control-static" th:each="keyword :  *{keywords}" th:text="${keyword}"></li>
-                            </ul>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Abilities:</label>
-                        <div class="col-sm-10">
-                            <ul  class="list-inline" >
-                                <li class="form-control-static" th:each="ability :  *{abilities}" th:text="${ability}"></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="form-group" th:object=" ${hero.skillsForm}">
+                <div th:replace="fragments/skills :: skills"></div>
+            </div>
+
+            <div class="col-xs-12">
+                <label class=" col-xs-12  control-label">Abilities:</label>
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="col-xs-6" th:each="ability :  *{abilities}" th:text="${ability}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <label class="col-xs-4 control-label">Health:</label>
+                <p class="col-xs-8 " th:text=" *{maxHealth}"></p>
+                <label class="col-xs-4 control-label">Defense:</label>
+                <p class="col-xs-8 " th:text=" *{defense}"></p>
+            </div>
+            <div class="col-xs-6">
+                <label class="col-xs-4 control-label">Max Sanity:</label>
+                <p class="col-xs-8" th:text=" *{maxSanity}"></p>
+                <label class="col-xs-4 control-label">Willpower:</label>
+                <p class="col-xs-8" th:text=" *{willpower}"></p>
             </div>
         </div>
     </div>

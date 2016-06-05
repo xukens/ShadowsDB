@@ -19,8 +19,8 @@ import pl.balif.shadows.core.repositorie.HeroClassRepository;
 import pl.balif.shadows.core.repositorie.HeroRepository;
 import pl.balif.shadows.core.repositorie.ItemRepository;
 import pl.balif.shadows.core.repositorie.KeywordRepository;
-import pl.balif.shadows.core.repositorie.command.HeroLogRepository;
-import pl.balif.shadows.core.service.SobHeroService;
+import pl.balif.shadows.core.repositorie.action.HeroLogRepository;
+import pl.balif.shadows.core.service.HeroService;
 
 /**
  * Created by RudyKot on 2016-05-26.
@@ -33,17 +33,17 @@ public class DevData implements ApplicationListener<ContextRefreshedEvent> {
     private final KeywordRepository keywordRepository;
     private final HeroClassRepository heroClassRepository;
     private final ItemRepository itemRepository;
-    private final SobHeroService sobHeroService;
+    private final HeroService heroService;
     private final HeroLogRepository heroLogRepository;
 
     @Autowired
-    public DevData(HeroRepository heroRepository, AbilityRepository abilityRepository, KeywordRepository keywordRepository, HeroClassRepository heroClassRepository, ItemRepository itemRepository, SobHeroService sobHeroService, HeroLogRepository heroLogRepository) {
+    public DevData(HeroRepository heroRepository, AbilityRepository abilityRepository, KeywordRepository keywordRepository, HeroClassRepository heroClassRepository, ItemRepository itemRepository, HeroService heroService, HeroLogRepository heroLogRepository) {
         this.heroRepository = heroRepository;
         this.abilityRepository = abilityRepository;
         this.keywordRepository = keywordRepository;
         this.heroClassRepository = heroClassRepository;
         this.itemRepository = itemRepository;
-        this.sobHeroService = sobHeroService;
+        this.heroService = heroService;
         this.heroLogRepository = heroLogRepository;
     }
 
@@ -55,10 +55,10 @@ public class DevData implements ApplicationListener<ContextRefreshedEvent> {
         Ability abilityAim = createAbility("aimed shoot");
         HeroClass hc = createHeroClass();
 
-        Long h = sobHeroService.createNewHero(hc.getId(), "Flamaster Nun");
+        Long h = heroService.createNewHero(hc.getId(), "Flamaster Nun");
         Hero hero = heroRepository.getOne(h);
 
-        sobHeroService.getHeroes();
+        heroService.getHeroes();
 //        Hero hero = createHero("Flamaster", 5, 10, 4, 4, 10, 4, 4, 2, 2, new Keyword[]{keyword, keywordPriest}, new Ability[]{ability}, 4, 4, 4, 4, 4, 4);
 //        Hero heroMagik = createHero("Magik", 5, 10, 4, 4, 10, 4, 4, 2, 2, new Keyword[]{keywordPriest}, new Ability[]{abilityAim, ability}, 5, 2, 5, 2, 4, 3);
     }

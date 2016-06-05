@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.balif.shadows.core.dto.form.HeroForm;
-import pl.balif.shadows.core.service.SobHeroService;
+import pl.balif.shadows.core.service.HeroService;
 
 import java.util.List;
 
@@ -17,23 +17,23 @@ import java.util.List;
 @RequestMapping("/hero")
 public class HeroController {
 
-    private final SobHeroService sobHeroService;
+    private final HeroService heroService;
 
     @Autowired
-    public HeroController(SobHeroService sobHeroService) {
-        this.sobHeroService = sobHeroService;
+    public HeroController(HeroService heroService) {
+        this.heroService = heroService;
     }
 
     @RequestMapping("/list")
     public String getHeroesList(Model model){
-        List<HeroForm> list = sobHeroService.getHeroes();
+        List<HeroForm> list = heroService.getHeroes();
         model.addAttribute("heroes", list);
         return "hero/list";
     }
 
     @RequestMapping(value = "/{id}")
     public String getHero(@PathVariable Long id, Model model){
-        HeroForm hero = sobHeroService.getHero(id);
+        HeroForm hero = heroService.getHero(id);
         model.addAttribute("hero", hero);
         return "hero/view";
     }

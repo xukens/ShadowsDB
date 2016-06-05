@@ -25,7 +25,8 @@ public class HeroAddSkillsTemplate extends HeroUpdateTemplate<HeroAddSkills> {
         return command;
     }
 
-    public HeroAddSkillsTemplate(Skills skills) {
+    public HeroAddSkillsTemplate(String name, Skills skills) {
+        super(name);
         this.skills = skills;
     }
 }
