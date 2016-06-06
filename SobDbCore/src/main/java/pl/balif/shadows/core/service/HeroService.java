@@ -14,4 +14,6 @@ public interface HeroService {
     HeroForm getHero(Long id);
 
     Long createNewHero(Long heroClassId, String heroName);
+
+    void addItem(Long heroId, Long itemId);
 }

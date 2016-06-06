@@ -16,6 +16,7 @@ import pl.balif.shadows.core.repositorie.HeroClassRepository;
 import pl.balif.shadows.core.repositorie.HeroRepository;
 
 import java.util.List;
+import pl.balif.shadows.core.repositorie.ItemRepository;
 import pl.balif.shadows.core.repositorie.action.HeroLogRepository;
 import pl.balif.shadows.core.repositorie.action.HeroUpdateRepository;
 import pl.balif.shadows.core.service.HeroService;
@@ -34,21 +35,23 @@ public class HeroServiceImpl implements HeroService {
     private final ConversionService conversionService;
     private final HeroLogRepository heroLogRepository;
     private final HeroUpdateRepository heroUpdateRepository;
+    private final ItemRepository itemRepository;
 
     @Autowired
-    public HeroServiceImpl(HeroRepository heroRepository, HeroClassRepository heroClassRepository, ConversionService conversionService, HeroLogRepository heroLogRepository, HeroUpdateRepository heroUpdateRepository) {
+    public HeroServiceImpl(HeroRepository heroRepository, HeroClassRepository heroClassRepository, ConversionService conversionService, HeroLogRepository heroLogRepository, HeroUpdateRepository heroUpdateRepository, ItemRepository itemRepository) {
         this.heroRepository = heroRepository;
         this.heroClassRepository = heroClassRepository;
         this.conversionService = conversionService;
         this.heroLogRepository = heroLogRepository;
         this.heroUpdateRepository = heroUpdateRepository;
+        this.itemRepository = itemRepository;
     }
 
     @Override
     public List<HeroForm> getHeroes() {
         List<Hero> heroList = (List<Hero>) heroRepository.findAll();
 //        heroLogRepository.findOne(1L).getMacro().getCommands().toString();
-        return conversionService.convert(heroList, HeroForm.class);
+        return conversionService.convertCollection(heroList, HeroForm.class);
     }
 
     @Override
@@ -72,6 +75,16 @@ public class HeroServiceImpl implements HeroService {
         hero.setHeroLog(new HeroLog(hero));
         hero = heroRepository.save(hero);
         return hero.getId();
+    }
+
+    @Override
+    public void addItem(Long heroId, Long itemId) {
+        checkNotNull(itemId, "20160607:002334");
+        checkNotNull(heroId, "20160607:003321");
+        Hero hero = heroRepository.getOne(heroId);
+        Item item = itemRepository.findOne(itemId);
+        checkNotNull(item, "20160607:004227");
+        hero.addItem(item);
     }
 
     private Map<Item, Integer> mapToItemQuantityMap(List<Item> items) {

@@ -26,7 +26,7 @@ public class ConversionService extends DefaultConversionService {
         ConversionServiceFactory.registerConverters(converterSet, this);
     }
 
-    public <S, T, CS extends Collection<S>, CT extends Collection<T>> CT convert(CS source, Class<T> target) {
+    public <S, T, CS extends Collection<S>, CT extends Collection<T>> CT convertCollection(CS source, Class<T> target) {
         return (CT) this.convert(source, TypeDescriptor.forObject(source),
                 TypeDescriptor.collection(source.getClass(), TypeDescriptor.valueOf(target)));
     }

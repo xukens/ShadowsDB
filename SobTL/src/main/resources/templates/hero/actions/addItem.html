@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"/>
+
+
+<body>
+<div class="container">
+    <h2>Choose Item to Add</h2>
+    <div>
+        <form class="form-horizontal" th:object="${itemForm}" th:action="@{item}" method="post">
+            <label>Select item:</label>
+            <select th:field="*{id}" th:remove="all-but-first">
+                <option th:each="item : ${itemFormList}" th:value="${item.id}" th:text="${item.name}">Item</option>
+            </select>
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

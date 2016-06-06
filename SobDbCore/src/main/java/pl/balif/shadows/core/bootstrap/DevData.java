@@ -71,6 +71,7 @@ public class DevData implements ApplicationListener<ContextRefreshedEvent> {
         hc.setAbilities(generateAbilities("Nun", 3));
         hc.setKeywords(generateKeywords("Nun", 3));
         hc.setItems(generateItem("Gun",3));
+        generateItem("Sword",2);
         hc.getItems().addAll(generateItem("Gun",2));
         hc = heroClassRepository.save(hc);
         return heroClassRepository.save(hc);

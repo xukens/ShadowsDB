@@ -10,7 +10,6 @@ import pl.balif.shadows.core.domain.Keyword;
 import pl.balif.shadows.core.domain.embeddable.HeroStats;
 import pl.balif.shadows.core.dto.form.HeroForm;
 
-
 /**
  * Created by RudyKot on 2016-05-26.
  */
@@ -18,10 +17,12 @@ import pl.balif.shadows.core.dto.form.HeroForm;
 public class HeroToHeroForm implements Converter<Hero, HeroForm> {
 
     private final SkillsToSkillsForm skillsToSkillsForm;
+    private final ItemToItemForm itemToItemForm;
 
     @Autowired
-    public HeroToHeroForm(SkillsToSkillsForm skillsToSkillsForm) {
+    public HeroToHeroForm(SkillsToSkillsForm skillsToSkillsForm, ItemToItemForm itemToItemForm) {
         this.skillsToSkillsForm = skillsToSkillsForm;
+        this.itemToItemForm = itemToItemForm;
     }
 
     @Override
@@ -45,6 +46,8 @@ public class HeroToHeroForm implements Converter<Hero, HeroForm> {
         hf.setAbilities(h.getAbilities().stream()
                 .map(Ability::toString).collect(Collectors.toList())
         );
+        hf.setItemFormList(h.getItems().keySet().stream()
+                .map(itemToItemForm::convert).collect(Collectors.toList()));
         return hf;
     }
 

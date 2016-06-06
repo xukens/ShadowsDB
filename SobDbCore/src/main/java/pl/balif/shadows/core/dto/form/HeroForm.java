@@ -24,4 +24,5 @@ public class HeroForm {
     private SkillsForm skillsForm;
     private List<String> keywords;
     private List<String> abilities;
+    private List<ItemForm> itemFormList;
 }

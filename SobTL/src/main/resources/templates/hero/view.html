@@ -17,7 +17,7 @@
         <h2>Actions</h2>
         <ul class="list-inline">
             <li>Level up</li>
-            <li>Add item</li>
+            <li><a th:href="${'/hero/' + hero.id+'/item'}">Add item</a></li>
             <li>Add token</li>
             <li>Add ability</li>
         </ul>
@@ -58,6 +58,14 @@
                     <div class="col-sm-12">
                         <p class="form-control-static" th:text=" *{toHitMelee}"></p>
                     </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <label class=" col-xs-12  control-label">Items:</label>
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="col-xs-12" th:each="item :  *{itemFormList}" th:text="${item.name}"></li>
+                    </ul>
                 </div>
             </div>
         </div>
